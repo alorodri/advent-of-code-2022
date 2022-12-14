@@ -89,14 +89,20 @@ fn solve(filename: &str, mode: Mode) -> u32 {
     total_score
 }
 
-pub fn problem_a() {
-    let result = solve("day2/input_a.txt", Mode::MOVES);
-    write_result("day2/result_a.txt", &result.to_string()).expect("Error writting result");
-}
+pub struct Day2;
 
-pub fn problem_b() {
-    let result = solve("day2/input_a.txt", Mode::TACTIC);
-    write_result("day2/result_b.txt", &result.to_string()).expect("Error writting result");
+impl Problem for Day2 {
+    fn get_day() -> Result<&'static str, &'static str> {
+        Ok("day2")
+    }
+
+    fn get_result_a() -> Result<u32, &'static str> {
+         Ok(solve("day2/input_a.txt", Mode::MOVES))
+    }
+    
+    fn get_result_b() -> Result<u32, &'static str> {
+        Ok(solve("day2/input_a.txt", Mode::TACTIC))
+    }
 }
 
 fn get_movement(char: &str) -> Result<Movement, &str> {

@@ -1,8 +1,32 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufReader, Write, BufRead};
 use std::str::FromStr;
+use std::sync::Mutex;
+use lazy_static::lazy_static;
+use crate::prelude::*;
 
-use crate::PROBLEMS;
+macro_rules! cp {
+    ($($k:literal, $v:expr),*) => {
+        $(add_problem($k, $v);)*
+    };
+}
+
+pub fn create_all_problems() {
+    cp!(
+        "1-a", Day1::problem_a,
+        "1-b", Day1::problem_b,
+        "2-a", Day2::problem_a,
+        "2-b", Day2::problem_b
+    );
+}
+
+lazy_static! {
+    static ref PROBLEMS: Mutex<HashMap<&'static str, fn()>> = {
+        let hm = HashMap::new();
+        Mutex::new(hm)
+    };
+}
 
 pub fn open_file(filename: &str) -> BufReader<File> {
     BufReader::new(File::open(filename).expect("Error reading test file"))
@@ -35,6 +59,14 @@ pub fn add_problem(name: &'static str, func: fn()) {
     PROBLEMS.lock().unwrap().insert(name, func);
 }
 
+#[allow(dead_code)]
 pub fn exec_problem(name: &str) {
     PROBLEMS.lock().unwrap().get(name).expect("Error retrieving problem from hashmap")();
+}
+
+#[allow(dead_code)]
+pub fn exec_all_problems() {
+    for problem in PROBLEMS.lock().expect("Error getting problems ref").values() {
+        problem();
+    }
 }
