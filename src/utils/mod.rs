@@ -18,7 +18,8 @@ pub fn create_all_problems() {
         "1-b", Day1::problem_b,
         "2-a", Day2::problem_a,
         "2-b", Day2::problem_b,
-        "3-a", Day3::problem_a
+        "3-a", Day3::problem_a,
+        "3-b", Day3::problem_b
     );
 }
 

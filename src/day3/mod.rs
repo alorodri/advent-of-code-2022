@@ -13,6 +13,54 @@ fn test_a() {
     assert_eq!(result, 157);
 }
 
+#[test]
+fn test_b() {
+    let result = Day3::solve_b("day3/input_test.txt").expect("Error getting result for test_b");
+    assert_eq!(result, 70);
+}
+
+impl Day3 {
+    fn solve_b(filename: &str) -> Result<u32, &'static str> {
+        let lines: Vec<Option<String>> = utils::read_file_to_vec(filename);
+        let mut buffer: Option<String> = None;
+        let mut coincidences: Vec<char> = Vec::new();
+        lines.into_iter().enumerate().map(|(i, line)| {
+            match line {
+                Some(content) => {
+                    let mut value = 0;
+                    match i % 3 {
+                        0 => {
+                            buffer = Some(content);
+                        },
+                        1 => {
+                            for char_a in buffer.as_ref().expect("No buffer data").chars() {
+                                for char_b in content.chars() {
+                                    if char_a == char_b {
+                                        coincidences.push(char_a);
+                                    }
+                                }
+                            }
+                        },
+                        2 => {
+                            for char_a in &coincidences {
+                                for char_b in content.chars() {
+                                    if char_a == &char_b {
+                                        let char_as_int = *char_a as u32;
+                                        value = if char_a.is_uppercase() { char_as_int - MAY_DIFF } else { char_as_int - MIN_DIFF }
+                                    }
+                                }
+                            }
+                        },
+                        _ => panic!("Unexpected value"),
+                    }
+                    value
+                },
+                None => 0,
+            }
+        }).reduce(|a, b| a + b).ok_or("Error getting final value")
+    }
+}
+
 impl Problem for Day3 {
     fn get_day() -> Result<&'static str, &'static str> {
         Ok("day3")
@@ -20,6 +68,10 @@ impl Problem for Day3 {
 
     fn get_result_a() -> Result<u32, &'static str> {
         Self::solve("day3/input_a.txt")
+    }
+    
+    fn get_result_b() -> Result<u32, &'static str> {
+        Self::solve_b("day3/input_a.txt")
     }
 
     fn solve(filename: &str) -> Result<u32, &'static str> {
