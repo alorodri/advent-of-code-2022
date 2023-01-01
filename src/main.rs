@@ -8,12 +8,17 @@ fn main() {
     utils::execute_all_problems();
 }
 
+#[derive(PartialEq)]
+pub enum ProblemChoice {
+    A, B
+}
+
 pub trait Problem {
     fn get_file_contents(filename: &str) -> Vec<Option<String>> {
         utils::read_file_to_vec(filename)
     }
 
-    fn solve(&self, _filename: &str) -> Result<u32, &'static str> {
+    fn solve(&self, _filename: &str, _problem: ProblemChoice) -> Result<u32, &'static str> {
         Err("Not implemented")
     }
 
@@ -51,4 +56,5 @@ mod prelude {
     pub use crate::day3::*;
     pub use crate::day4::*;
     pub use crate::Problem;
+    pub use crate::ProblemChoice;
 }
