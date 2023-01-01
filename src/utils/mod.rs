@@ -7,25 +7,26 @@ use lazy_static::lazy_static;
 use crate::prelude::*;
 
 macro_rules! cp {
-    ($($k:literal, $v:expr),*) => {
-        $(add_problem($k, $v);)*
+    ($($v:expr),*) => {
+        $({
+            let problem = $v;
+            problem.problem_a();
+            problem.problem_b();
+        })*
     };
 }
 
-pub fn create_all_problems() {
+pub fn execute_all_problems() {
     cp!(
-        "1-a", Day1::problem_a,
-        "1-b", Day1::problem_b,
-        "2-a", Day2::problem_a,
-        "2-b", Day2::problem_b,
-        "3-a", Day3::problem_a,
-        "3-b", Day3::problem_b,
-        "4-a", Day4::problem_a
+        Day1,
+        Day2,
+        Day3,
+        Day4
     );
 }
 
 lazy_static! {
-    static ref PROBLEMS: Mutex<HashMap<&'static str, fn()>> = {
+    static ref PROBLEMS: Mutex<HashMap<&'static str, ()>> = {
         let hm = HashMap::new();
         Mutex::new(hm)
     };
@@ -36,9 +37,8 @@ pub fn open_file(filename: &str) -> BufReader<File> {
 }
 
 pub fn read_file_to_vec<T: FromStr>(filename: &str) -> Vec<Option<T>> {
-    let lines: Vec<_> = open_file(filename).lines().collect();
     let mut results: Vec<Option<T>> = Vec::new();
-    lines.into_iter().for_each(|line| {
+    open_file(filename).lines().for_each(|line| {
         match line.as_ref().expect("Failing reading file").parse::<T>() {
             Ok(content) => {
                 match line.expect("Error on line ref").chars().count() {
@@ -58,18 +58,11 @@ pub fn write_result(filename: &str, content: &str) -> std::io::Result<File> {
     Ok(f)
 }
 
-pub fn add_problem(name: &'static str, func: fn()) {
-    PROBLEMS.lock().unwrap().insert(name, func);
+pub fn add_problem(name: &'static str, result: ()) {
+    PROBLEMS.lock().unwrap().insert(name, result);
 }
 
 #[allow(dead_code)]
 pub fn exec_problem(name: &str) {
-    PROBLEMS.lock().unwrap().get(name).expect("Error retrieving problem from hashmap")();
-}
-
-#[allow(dead_code)]
-pub fn exec_all_problems() {
-    for problem in PROBLEMS.lock().expect("Error getting problems ref").values() {
-        problem();
-    }
+    PROBLEMS.lock().unwrap().get(name).expect("Error retrieving problem from hashmap");
 }

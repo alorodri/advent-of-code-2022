@@ -38,15 +38,15 @@ fn solve(filename: &str, extra_params: HashMap<&str, &str>) -> Result<u32, &'sta
 }
 
 impl Problem for Day1 {
-    fn get_day() -> Result<&'static str, &'static str> {
+    fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day1")
     }
 
-    fn get_result_a() -> Result<u32, &'static str> {
+    fn get_result_a(&self) -> Result<u32, &'static str> {
         solve("day1/input_a.txt", HashMap::from([("number_results", "1")]))
     }
     
-    fn get_result_b() -> Result<u32, &'static str> {
+    fn get_result_b(&self) -> Result<u32, &'static str> {
         solve("day1/input_a.txt", HashMap::from([("number_results", "3")]))
     }
 }

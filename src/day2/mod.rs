@@ -92,15 +92,15 @@ fn solve(filename: &str, mode: Mode) -> u32 {
 pub struct Day2;
 
 impl Problem for Day2 {
-    fn get_day() -> Result<&'static str, &'static str> {
+    fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day2")
     }
 
-    fn get_result_a() -> Result<u32, &'static str> {
+    fn get_result_a(&self) -> Result<u32, &'static str> {
          Ok(solve("day2/input_a.txt", Mode::MOVES))
     }
     
-    fn get_result_b() -> Result<u32, &'static str> {
+    fn get_result_b(&self) -> Result<u32, &'static str> {
         Ok(solve("day2/input_a.txt", Mode::TACTIC))
     }
 }

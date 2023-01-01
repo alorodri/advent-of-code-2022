@@ -4,20 +4,21 @@ pub struct Day4;
 
 #[test]
 fn test_a() {
-    let result = Day4::solve("day4/input_test.txt").expect("Error on test_a result");
+    let problem = Day4;
+    let result = problem.solve("day4/input_test.txt").expect("Error on test_a result");
     assert_eq!(result, 2);
 }
 
 impl Problem for Day4 {
-    fn get_day() -> Result<&'static str, &'static str> {
+    fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day4")
     }
 
-    fn get_result_a() -> Result<u32, &'static str> {
-        Self::solve("day4/input_a.txt") 
+    fn get_result_a(&self) -> Result<u32, &'static str> {
+        self.solve("day4/input_a.txt") 
     }
 
-    fn solve(filename: &str) -> Result<u32, &'static str> {
+    fn solve(&self, filename: &str) -> Result<u32, &'static str> {
         let lines: Vec<Option<String>> = utils::read_file_to_vec(filename);
         let mut result: u32 = 0;
         lines.iter().for_each(|line| {

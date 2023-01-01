@@ -9,7 +9,8 @@ const MAY_DIFF: u32 = 38;
 
 #[test]
 fn test_a() {
-    let result = Day3::solve("day3/input_test.txt").expect("Error getting result for test_a");
+    let problem = Day3;
+    let result = problem.solve("day3/input_test.txt").expect("Error getting result for test_a");
     assert_eq!(result, 157);
 }
 
@@ -62,19 +63,19 @@ impl Day3 {
 }
 
 impl Problem for Day3 {
-    fn get_day() -> Result<&'static str, &'static str> {
+    fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day3")
     }
 
-    fn get_result_a() -> Result<u32, &'static str> {
-        Self::solve("day3/input_a.txt")
+    fn get_result_a(&self) -> Result<u32, &'static str> {
+        self.solve("day3/input_a.txt")
     }
     
-    fn get_result_b() -> Result<u32, &'static str> {
+    fn get_result_b(&self) -> Result<u32, &'static str> {
         Self::solve_b("day3/input_a.txt")
     }
 
-    fn solve(filename: &str) -> Result<u32, &'static str> {
+    fn solve(&self, filename: &str) -> Result<u32, &'static str> {
         let lines: Vec<Option<String>> = utils::read_file_to_vec(filename);
         lines.into_iter().map(|line| {
             let value: u32 = match line {
