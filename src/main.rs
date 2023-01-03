@@ -2,6 +2,7 @@ pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
+pub mod day5;
 pub mod utils;
 
 fn main() {
@@ -13,21 +14,24 @@ pub enum ProblemChoice {
     A, B
 }
 
-pub trait Problem {
+pub trait Problem<T> 
+    where T: std::fmt::Display
+{
     fn get_file_contents(filename: &str) -> Vec<Option<String>> {
         utils::read_file_to_vec(filename)
     }
 
-    fn solve(&self, _filename: &str, _problem: ProblemChoice) -> Result<u32, &'static str> {
+    fn solve(&self, _filename: &str, _problem: ProblemChoice) -> Result<T, &'static str>
+    {
         Err("Not implemented")
     }
 
-    fn get_result_a(&self) -> Result<u32, &'static str> {
+    fn get_result_a(&self) -> Result<T, &'static str> {
         println!("[WARNING] Result A for {} is not implemented", self.get_day().unwrap());
         Err("Not implemented")
     }
 
-    fn get_result_b(&self) -> Result<u32, &'static str> {
+    fn get_result_b(&self) -> Result<T, &'static str> {
         println!("[WARNING] Result B for {} is not implemented", self.get_day().unwrap());
         Err("Not implemented")
     }
@@ -55,6 +59,7 @@ mod prelude {
     pub use crate::day2::*;
     pub use crate::day3::*;
     pub use crate::day4::*;
+    pub use crate::day5::*;
     pub use crate::Problem;
     pub use crate::ProblemChoice;
 }

@@ -91,7 +91,7 @@ fn solve(filename: &str, mode: Mode) -> u32 {
 
 pub struct Day2;
 
-impl Problem for Day2 {
+impl Problem<u32> for Day2 {
     fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day2")
     }

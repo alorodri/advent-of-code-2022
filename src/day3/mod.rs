@@ -62,7 +62,7 @@ impl Day3 {
     }
 }
 
-impl Problem for Day3 {
+impl Problem<u32> for Day3 {
     fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day3")
     }

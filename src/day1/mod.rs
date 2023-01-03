@@ -37,7 +37,7 @@ fn solve(filename: &str, extra_params: HashMap<&str, &str>) -> Result<u32, &'sta
     Ok(sums_vec.into_iter().reduce(|a, b| a + b).expect("Failed adding numbers"))
 }
 
-impl Problem for Day1 {
+impl Problem<u32> for Day1 {
     fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day1")
     }

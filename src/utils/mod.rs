@@ -21,7 +21,8 @@ pub fn execute_all_problems() {
         Day1,
         Day2,
         Day3,
-        Day4
+        Day4,
+        Day5
     );
 }
 

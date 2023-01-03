@@ -16,7 +16,7 @@ fn test_b() {
     assert_eq!(result, 4);
 }
 
-impl Problem for Day4 {
+impl Problem<u32> for Day4 {
     fn get_day(&self) -> Result<&'static str, &'static str> {
         Ok("day4")
     }
