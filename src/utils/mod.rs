@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::Debug;
 use std::fs::File;
 use std::io::{BufReader, Write, BufRead};
 use std::str::FromStr;
@@ -51,6 +52,21 @@ pub fn read_file_to_vec<T: FromStr>(filename: &str) -> Vec<Option<T>> {
         }
     });
     results
+}
+
+#[test]
+fn test_get_characters_as() {
+    let string: String = get_characters_as("hello world", 2, 3);
+    assert_eq!(string, "llo");
+    let numbers: u32 = get_characters_as("123456789", 2, 3);
+    assert_eq!(numbers, 345);
+}
+
+pub fn get_characters_as<T>(text: &'static str, init: usize, n: usize) -> T
+    where T: FromStr, <T as FromStr>::Err: Debug
+{
+    let result: String = text.chars().skip(init).take(n).collect();
+    result.parse().expect("Error parsing characters to T")
 }
 
 pub fn write_result(filename: &str, content: &str) -> std::io::Result<File> {

@@ -14,7 +14,8 @@ impl Problem<&'static str> for Day5 {
         Ok("day5")
     }
 
-    fn solve(&self, _filename: &str, _problem: ProblemChoice) -> Result<&'static str, &'static str> {
-        panic!("Not implemented")
+    fn solve(&self, filename: &str, _problem: ProblemChoice) -> Result<&'static str, &'static str> {
+        let lines: Vec<Option<String>> = read_file_to_vec(filename);
+        panic!();
     }
 }
